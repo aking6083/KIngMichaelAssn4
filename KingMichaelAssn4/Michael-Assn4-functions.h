@@ -7,12 +7,12 @@
 //*****************************************************************************
 
 //prototypes
-void bubbleSort(int list[], int length);
-void insertionSort(int list[], int length);
-int* CreateDynamArray(int aSize);
-void PopArrays(int list1[], int list2[]);
-void sortSelection (int &rtnfunc, string &testType, char sel);
-int Random();
-void mergeSort();
-void DisplayMenu();
-void Header();Enter file contents here
+//#include "KingMichael-Assn4-common.h"
+
+void showMenu();
+sortType * getUserSort(int &numTimes);
+int getTestRuns();
+void initArrays(int rdmLst1[], int rdmLst2[]);
+void popArray(int rmdLst1[], int rmdLst2[]);
+int * bubbleSortIt(int numTimes, int rdmLst[], double &srtAvg);
+int * insertSortIt(int numTimes, int rdmLst, double &srtAvg);
