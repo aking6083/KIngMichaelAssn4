@@ -1,0 +1,34 @@
+// KingMichaelAssn4.cpp : Defines the entry point for the console application.
+//
+
+#include "King-Assn4-functions.h"
+#include "KingMichael-assn4-common.h"
+#include "Michael-assn4-funcs.h"
+
+
+#include <iomanip>
+#include <iostream>      //cin and cout
+#include <cstddef>       // used for assigning NULL
+#include <cctype>	     //for cctype predefined functions
+#include <ctime>			//for time seed in srand function
+#include <cstdlib>			//for c standard library predefined functions
+
+
+
+int main()
+{
+
+	int numTimes = 0;
+
+    sortType sortSel[MAX_CHOICES];
+    sortType *sPtr;
+
+	sPtr = getUserSort(sortSel, numTimes);
+
+	cout << sPtr[0] << endl << sPtr[1];
+
+
+//	cout << test1[0] << " " << test1[1] << endl;
+
+	return 0;
+}
