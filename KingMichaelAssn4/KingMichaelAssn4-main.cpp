@@ -10,11 +10,16 @@ int main(int argc, char* argv[])
 {
 	int numTimes = 0;
 	sortType *usrSorts;
+	double *srtAvgs = 0;
+			
+	do
+	{
+		showMenu();
+		usrSorts = getUserSort(numTimes);
+		processChoices(usrSorts, numTimes, usrSorts, srtAvgs);
 
-	showMenu();
-	usrSorts = getUserSort(numTimes);
-	
-	cout << usrSorts[0] << " " << usrSorts[1] << endl;
+
+	} while (*usrSorts != EXIT);
 	
 	return 0;
 }
