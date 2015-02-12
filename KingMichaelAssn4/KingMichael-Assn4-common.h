@@ -8,7 +8,7 @@
 
 using namespace std;
 
-enum sortType { BUBBLE, INSERT, MERGE, QUICK, EXIT };
+enum sortType { BUBBLE, INSERT, MERGE, QUICK, EXIT, NONE };
 const char BBL_SRT = 'B';
 const char MRG_SRT = 'M';
 const char QCK_SRT = 'Q';

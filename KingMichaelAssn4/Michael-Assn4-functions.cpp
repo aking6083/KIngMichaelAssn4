@@ -59,9 +59,10 @@ int getTestRuns()
 
 
 
-sortType* getUserSort(int &numTimes)
+sortType * getUserSort(int &numTimes)
 {
-	sortType usrSorts[MAX_CHOICES];
+	sortType *usrSorts;
+	usrSorts = new sortType[MAX_CHOICES];
 	
 	string userInput;
 	
@@ -103,6 +104,7 @@ sortType* getUserSort(int &numTimes)
 		case BBL_SRT:
 			usrSorts[a] = BUBBLE;
 			break;
+		
 		case MRG_SRT:
 			usrSorts[a] = MERGE;
 			break;
@@ -114,6 +116,7 @@ sortType* getUserSort(int &numTimes)
 		case INSRT_SRT:
 			usrSorts[a] = INSERT;
 			break;
+		
 		case EXIT_SRT:
 			usrSorts[a] = EXIT;
 			break;
@@ -141,6 +144,7 @@ return usrSorts;
 // CALLS TO: N/A
 // IMPLEMENTED BY: Shawn Michael
 //*****************************************************************************
+
 void bubbleSort(int numTimes, int list[], int first, int last, double &srtAvg)
 {
 	static int timeSum = 0;
@@ -167,6 +171,32 @@ void bubbleSort(int numTimes, int list[], int first, int last, double &srtAvg)
 	elapsedTime = endTime - startTime;
 	timeSum += elapsedTime;
 	srtAvg = timeSum / numTimes;
+
+	
+}
+
+
+int * bubbleSortIt(int numTimes, int rdmLst[], double &srtAvg)
+{
+	showArray(rdmLst);
+	cout << endl; 
+	int cntr = 0,
+		num = 0;
+
+	for (int a = 0; a < ARRAY_SIZE; a++)
+	{
+		for (int b = 0; b <= ARRAY_SIZE - 1; b++)
+		{
+			if (rdmLst[b] > rdmLst[b+1])
+			{
+				cntr = rdmLst[b];
+				rdmLst[b] = rdmLst[b + 1];
+				rdmLst[b + 1] = cntr;
+
+			}
+		}
+	}
+	return rdmLst;
 }
 
 //*****************************************************************************

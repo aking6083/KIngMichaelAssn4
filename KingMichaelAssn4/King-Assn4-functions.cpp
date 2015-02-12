@@ -1,15 +1,15 @@
 #include "KingMichael-Assn4-common.h"
 #include "King-Assn4-functions.h"
-#include "Michael-Assn4-functions.h";
+#include "Michael-Assn4-functions.h"
 
 using namespace std;
 
 typedef sortType testType;
 
-void processChoices(sortType userSorts[], int numTimes, testType theTests[], double tstAvg[])
+void processChoices(sortType* userSorts, int numTimes, testType theTests[], double tstAvg[])
 {
-	double *srch0Rslts,
-		   *srch1Rslts;
+	double srchRslts = 0;
+		   
 
 	int *list1,
 	    *list2;
@@ -22,15 +22,16 @@ void processChoices(sortType userSorts[], int numTimes, testType theTests[], dou
 	list1 = popArray(list1);
 	list2 = popArray(list2);
 	
-	cout << list1[2] << endl; //For verification that data was loaded.
+	//cout << list1[2] << endl; //For verification that data was loaded.
 	
-	for (int a = 0; a <= 2; a++) //Run through the userSort selection array
+	for (int a = 0; a <= MAX_CHOICES-1; a++) //Run through the userSort selection array
 	{
 		switch (userSorts[a])
 		{
 		case BUBBLE:
-			for (int b = 0; b <= numTimes - 1;b++) //Run test x amount of times.
-			{ }
+			list1 = bubbleSortIt(numTimes, list1, srchRslts);
+			showArray(list1);
+			
 			//Bubble Search Here	
 		break;
 
@@ -44,7 +45,15 @@ void processChoices(sortType userSorts[], int numTimes, testType theTests[], dou
 
 		case MERGE:
 			//Insert Merge Sort here
+			break;
 		}
 	}
+
+}
+
+void showArray(int rdmLst[])
+{
+	for (int a = 0; a <= ARRAY_SIZE - 1; a++)
+		cout << rdmLst[a] << endl;
 
 }

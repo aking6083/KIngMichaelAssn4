@@ -16,3 +16,5 @@ int * initArray();
 int* popArray(int theList[]);
 int * bubbleSortIt(int numTimes, int rdmLst[], double &srtAvg);
 int * insertSortIt(int numTimes, int rdmLst, double &srtAvg);
+void bubbleSort(int numTimes, int list[], int first, int last, double &srtAvg);
+void showArray(int rdmLst[]);

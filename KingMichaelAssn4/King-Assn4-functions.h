@@ -7,7 +7,7 @@
 //#include "KingMichael-Assn4-common.h"
 
 void validChoice(string userInput);
-void processChoices(sortType userSorts[], int numTimes, sortType theTests[], 
+void processChoices(sortType *userSorts, int numTimes, sortType theTests[], 
 					double tstAvg[]);
 int * mergeSortIt(int numTimes, int rdmLst, double &srtAvg);
 int * quickSort(int numTimes, int rdmLst, double &srtAvg);
