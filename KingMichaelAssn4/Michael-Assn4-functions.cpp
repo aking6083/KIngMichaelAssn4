@@ -176,9 +176,9 @@ void bubbleSort(int numTimes, int list[], int first, int last, double &srtAvg)
 }
 
 
-int * bubbleSortIt (int numTimes, int rdmLst[], double &srtAvg)
+int * bubbleSortIt (int rdmLst[])
 {
-	showArray(rdmLst);
+	
 	cout << endl; 
 	int cntr = 0,
 		num = 0;

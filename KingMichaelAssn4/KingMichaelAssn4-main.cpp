@@ -16,8 +16,6 @@ int main(int argc, char* argv[])
 	{
 		showMenu();
 		usrSorts = getUserSort(numTimes);
-		cout << usrSorts[0] << endl;
-		cout << usrSorts[1] << endl;
 		processChoices(usrSorts, numTimes, usrSorts, srtAvgs);
 
 

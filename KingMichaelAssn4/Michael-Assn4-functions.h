@@ -14,7 +14,7 @@ sortType * getUserSort(int &numTimes);
 int getTestRuns();
 int * initArray();
 void popArrays(int theList1[], int theList2[]);
-int * bubbleSortIt(int numTimes, int rdmLst[], double &srtAvg);
+int * bubbleSortIt(int rdmLst[]);
 int * insertSortIt(int numTimes, int rdmLst, double &srtAvg);
 void bubbleSort(int numTimes, int list[], int first, int last, double &srtAvg);
 void showArray(int rdmLst[]);
