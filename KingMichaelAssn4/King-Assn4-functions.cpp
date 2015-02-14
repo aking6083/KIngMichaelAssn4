@@ -9,7 +9,11 @@ typedef sortType testType;
 void processChoices(sortType* userSorts, int numTimes, testType theTests[], double tstAvg[])
 {
 	double srchRslts = 0;
-		   
+	
+	//Dumb function pointer.
+
+	int * (*bubblePtr) (int numTimes, int rdmLst[], double &srtAvg);
+
 
 	int *list1,
 	    *list2;
@@ -18,19 +22,20 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 	list1 = initArray();
 	list2 = initArray();
 
-	//
-	list1 = popArray(list1);
-	list2 = popArray(list2);
+	//Populate both lists with the same numbers.
+	popArrays(list1, list2);
 	
-	//cout << list1[2] << endl; //For verification that data was loaded.
-	
+	cout << list1[2] << endl; //For verification that data was loaded.
+	cout << list2[2] << endl;
+
 	for (int a = 0; a <= MAX_CHOICES-1; a++) //Run through the userSort selection array
 	{
+		//We can run and time our sorts from here.  
 		switch (userSorts[a])
 		{
 		case BUBBLE:
-			list1 = bubbleSortIt(numTimes, list1, srchRslts);
-			showArray(list1);
+			bubblePtr = bubbleSortIt;
+			list1 = (*bubblePtr) (1, list1, srchRslts);
 			
 			//Bubble Search Here	
 		break;
@@ -56,4 +61,10 @@ void showArray(int rdmLst[])
 	for (int a = 0; a <= ARRAY_SIZE - 1; a++)
 		cout << rdmLst[a] << endl;
 
+}
+
+int * mergeSortIt(int numTimes, int rdmLst, double &srtAvg)
+{
+
+	return NULL;
 }

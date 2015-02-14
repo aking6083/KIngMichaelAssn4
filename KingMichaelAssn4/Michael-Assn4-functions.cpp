@@ -176,7 +176,7 @@ void bubbleSort(int numTimes, int list[], int first, int last, double &srtAvg)
 }
 
 
-int * bubbleSortIt(int numTimes, int rdmLst[], double &srtAvg)
+int * bubbleSortIt (int numTimes, int rdmLst[], double &srtAvg)
 {
 	showArray(rdmLst);
 	cout << endl; 
@@ -290,7 +290,7 @@ void quickSort(int numTimes, int list[], int first, int last, double &srtAvg)
 // CALLS TO: Random(),
 // IMPLEMENTED BY: Shawn Michael
 //**********************************************************************
-int* popArray(int theList[])
+void popArrays(int theList1[], int theList2[])
 {
 	int counter = 0;	    //counter to control input into static array
 	int rNum;				//int variable to hold random number
@@ -303,10 +303,10 @@ int* popArray(int theList[])
 
 		//function creates random number and duplicate search
 		rNum = (rand() % MAX_ARRAY_NUM) + 1;
-		theList[counter] = rNum;
+		theList1[counter] = rNum;
+		theList2[counter] = rNum;
 		counter++;
 	}//end while
-	return theList;
 }
 
 //*****************************************************************************
