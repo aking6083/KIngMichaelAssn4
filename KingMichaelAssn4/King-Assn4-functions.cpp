@@ -31,14 +31,13 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 	int * (*bubblePtr) (int rdmLst[]);
 	int * (*insertPtr) (int rmdLst[], int first, int last);
 	int * (*quickPtr)(int rdmLst[], int first, int last);
+	void (*mergePtr)(int rdmLst[], int start, int end);
 	
 	int *list1;
-	    //*list2;
-	
+	    
 	//No need to build both lists into one function, just call the same function twice to init the list.
 	list1 = initArray();
-	//list2 = initArray();
-		
+			
 	for (a = 0; a <= numTimes - 1; a++)
 	{
 		runningAvg = 0;
@@ -66,7 +65,6 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 					cout << "Invalid Bubble Sort";
 				else
 					cout << "Bubble Sort Time " << elapsedTime << endl;
-					
 				
 				break;
 
@@ -104,15 +102,25 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 				break;
 
 			case MERGE:
-				cout << "Merger Search\n";
-				//Insert Merge Sort here
+				popArray(list1);
+				mergePtr = mergeSortIt;
+				startTime = clock();
+			    (*mergePtr) (list1, 0, ARRAY_SIZE);
+				endTime = clock();
+				elapsedTime = endTime - startTime;
+				mergeAvg += elapsedTime;
+				tstAvg[userSorts[b]] = mergeAvg / numTimes;
+
+				if (!sortValid(list1))
+					cout << "Invalid Merge Sort";
+				else
+					cout << "Merge Sort Time " << elapsedTime << endl;
+
 				break;
 			}// End switch
 			
 		}// End a Loop
-		
 	}
-
 }
 
 
@@ -124,10 +132,63 @@ void showArray(int rdmLst[])
 
 }
 
-int * mergeSortIt(int numTimes, int rdmLst, double &srtAvg)
+void merge(int *rdmLst, int low, int mid, int high)
 {
+	int h, i, j, k = 0;
+	h = low;
+	i = low;
+	j = mid + 1;
 
-	return NULL;
+	int *tmpArray = initArray();
+
+	while ((h <= mid) && (j <= high))
+	{
+		if (rdmLst[h] <= rdmLst[j])
+		{
+			tmpArray[i] = rdmLst[h];
+			h++;
+		}
+		else
+		{
+			tmpArray[i] = rdmLst[j];
+			j++;
+		}
+		i++;
+	}
+	if (h>mid)
+	{
+		for (k = j; k <= high; k++)
+		{
+			tmpArray[i] = rdmLst[k];
+			i++;
+		}
+	}
+	else
+	{
+		for (k = h; k <= mid; k++)
+		{
+			tmpArray[i] = rdmLst[k];
+			i++;
+		}
+	}
+	
+	for (k = low; k <= high; k++) 
+		rdmLst[k] = tmpArray[k];
+
+	
+}
+
+
+void mergeSortIt(int rdmLst[], int low, int high)
+{
+	int mid;
+	if (low < high)
+	{
+		mid = low + (high - low) / 2; //This avoids overflow when low, high are too large
+		mergeSortIt(rdmLst, low, mid);
+		mergeSortIt(rdmLst, mid + 1, high);
+		merge(rdmLst, low, mid, high);
+	}
 }
 
 bool  sortValid(int srtList[])

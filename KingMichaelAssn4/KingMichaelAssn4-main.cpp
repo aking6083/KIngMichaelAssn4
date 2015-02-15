@@ -13,10 +13,11 @@ int main(int argc, char* argv[])
 	double *srtAvgs = 0;
 	srtAvgs = new double[NUM_CHOICES];
 	//Init averages to zero
-	for (int a = 0; a <= NUM_CHOICES; a++)
-		srtAvgs[a] = 0;
+	
 	do
 	{
+		for (int a = 0; a <= NUM_CHOICES; a++)
+			srtAvgs[a] = 0;
 		showMenu();
 		usrSorts = getUserSort(numTimes);
 		processChoices(usrSorts, numTimes, usrSorts, srtAvgs);
