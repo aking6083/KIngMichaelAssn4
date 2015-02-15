@@ -83,8 +83,7 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 					cout << "Invalid Insert Sort";
 				else
 					cout << "Insert Sort Time " << elapsedTime << endl;
-				 tstAvg[a] = runningAvg / numTimes;
-				//Insert Search here
+				
 				break;
 
 			case QUICK:
@@ -96,12 +95,12 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 				elapsedTime = endTime - startTime;
 				quickAvg += elapsedTime;
 				tstAvg[userSorts[b]] = quickAvg / numTimes;
+				
 				if (!sortValid(list1))
 					cout << "Invalid Quick Sort";
 				else
 					cout << "Quick Sort Time " << elapsedTime << endl;
-				tstAvg[a] = runningAvg / numTimes;
-				//Insert Quick Sort here
+				
 				break;
 
 			case MERGE:
@@ -156,9 +155,11 @@ void showResults(sortType theTests[], double tstAvgs[])
 	cout << "SORTING RESULTS"
 		<< "\n=================\n";
 	
-	for (int a = 0; a <= MAX_CHOICES - 1;a++)
+	for (int a = 0; a <= NUM_CHOICES - 1;a++)
 	{
-		cout << sortTypeStr[theTests[a]] << " search average is " << tstAvgs[a] << endl;
+		
+			
+		
 	}
 }
 

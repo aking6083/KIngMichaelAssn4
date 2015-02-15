@@ -12,7 +12,9 @@ int main(int argc, char* argv[])
 	sortType *usrSorts;
 	double *srtAvgs = 0;
 	srtAvgs = new double[NUM_CHOICES];
-			
+	//Init averages to zero
+	for (int a = 0; a <= NUM_CHOICES; a++)
+		srtAvgs[a] = 0;
 	do
 	{
 		showMenu();
