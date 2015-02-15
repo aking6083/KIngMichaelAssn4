@@ -21,8 +21,6 @@ int main(int argc, char* argv[])
 		usrSorts = getUserSort(numTimes);
 		processChoices(usrSorts, numTimes, usrSorts, srtAvgs);
 		showResults(usrSorts, srtAvgs);
-		
-
 	} while (*usrSorts != EXIT);
 	
 	return 0;

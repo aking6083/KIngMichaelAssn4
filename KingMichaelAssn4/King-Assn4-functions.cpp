@@ -8,7 +8,7 @@ typedef sortType testType;
 
 //tstAvg[0] would be first test and tstAvg[1] would be second test
 
-void processChoices(sortType* userSorts, int numTimes, testType theTests[], double tstAvg[])
+void processChoices(sortType* userSorts, int numTimes, testType theTests[], double *tstAvg)
 {
 	
 	static int timeSum = 0;
@@ -43,7 +43,7 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 	{
 		runningAvg = 0;
 		//Populate both lists with the same numbers.
-	;// Gonna have to change this becuase list1 and list2 dont make sense 
+		// Gonna have to change this becuase list1 and list2 dont make sense 
 		
 		elapsedTime = 0;
 		if (userSorts[a] != EXIT)
@@ -112,10 +112,7 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 		}// End a Loop
 		
 	}
-	
-		
-		
-		
+
 }
 
 
@@ -148,18 +145,20 @@ bool  sortValid(int srtList[])
 	return validSort;
 }
 
-void showResults(sortType theTests[], double tstAvgs[])
+void showResults(sortType theTests[], double *tstAvgs)
 {
 	string temp;
 
 	cout << "SORTING RESULTS"
 		<< "\n=================\n";
 	
-	for (int a = 0; a <= NUM_CHOICES - 1;a++)
+	for (int z = 0; z <= NUM_CHOICES - 1; z++)
 	{
-		
-			
-		
+		if (tstAvgs[z])
+		{
+			cout << sortTypeStr[z] << " Sort " << tstAvgs[z] << " clock ticks on average \n";
+
+		}
 	}
 }
 

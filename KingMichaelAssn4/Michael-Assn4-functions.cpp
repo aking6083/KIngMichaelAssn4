@@ -192,7 +192,6 @@ int * bubbleSortIt (int rdmLst[])
 				cntr = rdmLst[b];
 				rdmLst[b] = rdmLst[b + 1];
 				rdmLst[b + 1] = cntr;
-
 			}
 		}
 	}
