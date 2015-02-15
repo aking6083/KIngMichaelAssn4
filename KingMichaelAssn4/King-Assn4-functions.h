@@ -15,3 +15,4 @@ int * quickSort(int numTimes, int rdmLst, double &srtAvg);
 int * insertSortIt(int rdmLst[], int first, int last);
 bool  sortValid(int srtList[]);
 void showResults(sortType theTests[], double *tstAvgs);
+string getValidInput();

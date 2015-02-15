@@ -6,124 +6,127 @@ using namespace std;
 
 typedef sortType testType;
 
-//tstAvg[0] would be first test and tstAvg[1] would be second test
-
 void processChoices(sortType* userSorts, int numTimes, testType theTests[], double *tstAvg)
 {
 	
-	static int timeSum = 0;
-	
-	int a = 0,
-		b = 0,
-		startTime = 0,
-		endTime = 0, 
-		elapsedTime = 0;
-	
-	double runningAvg = 0, // For average calculation
+	if (*userSorts != EXIT)
+	{
+		static int timeSum = 0;
+
+		int a = 0,
+			b = 0,
+			startTime = 0,
+			endTime = 0,
+			elapsedTime = 0;
+
+		double runningAvg = 0, // For average calculation
 			bubbleAvg = 0,
 			insertAvg = 0,
 			quickAvg = 0,
 			mergeAvg = 0,
 			srchRslts = 0;
-	
-	//Dumb function pointer.
 
-	int * (*bubblePtr) (int rdmLst[]);
-	int * (*insertPtr) (int rmdLst[], int first, int last);
-	int * (*quickPtr)(int rdmLst[], int first, int last);
-	void (*mergePtr)(int rdmLst[], int start, int end);
-	
-	int *list1;
-	    
-	//No need to build both lists into one function, just call the same function twice to init the list.
-	list1 = initArray();
-			
-	for (a = 0; a <= numTimes - 1; a++)
-	{
-		runningAvg = 0;
-		//Populate both lists with the same numbers.
-		// Gonna have to change this becuase list1 and list2 dont make sense 
-		
-		elapsedTime = 0;
-		if (userSorts[a] != EXIT)
-			cout << "Starting Sort " << a + 1 << endl;
-		
-		for (b = 0; b <= MAX_CHOICES - 1; b++) //Run through the userSort selection array
+		//Dumb function pointer.
+
+		int * (*bubblePtr) (int rdmLst[]);
+		int * (*insertPtr) (int rmdLst[], int first, int last);
+		int * (*quickPtr)(int rdmLst[], int first, int last);
+		void(*mergePtr)(int rdmLst[], int start, int end);
+
+		int *list1;
+
+		//No need to build both lists into one function, just call the same function twice to init the list.
+		list1 = initArray();
+
+		for (a = 0; a <= numTimes - 1; a++)
 		{
-			switch (userSorts[b])
+			runningAvg = 0;
+			//Populate both lists with the same numbers.
+			// Gonna have to change this becuase list1 and list2 dont make sense 
+
+			elapsedTime = 0;
+			if (userSorts[a] != EXIT)
+				cout << "\nStarting Sort " << a + 1 << endl;
+			cout << "======================" << endl;
+			for (b = 0; b <= MAX_CHOICES - 1; b++) //Run through the userSort selection array
 			{
-			case BUBBLE:
-				popArray(list1);
-				bubblePtr = bubbleSortIt;
-				startTime = clock();
-				list1 = (*bubblePtr) (list1);
-				endTime = clock();
-				elapsedTime = endTime - startTime;
-				bubbleAvg += elapsedTime;
-				tstAvg[userSorts[b]] = bubbleAvg / numTimes;
-				if (!sortValid(list1))
-					cout << "Invalid Bubble Sort";
-				else
+				switch (userSorts[b])
+				{
+				case BUBBLE:
+					popArray(list1);
+					bubblePtr = bubbleSortIt;
+					startTime = clock();
+					list1 = (*bubblePtr) (list1);
+					endTime = clock();
+					elapsedTime = endTime - startTime;
+					bubbleAvg += elapsedTime;
+					tstAvg[userSorts[b]] = bubbleAvg / numTimes;
 					cout << "Bubble Sort Time " << elapsedTime << endl;
-				
-				break;
+					if (!sortValid(list1))
+						cout << "Invalid Bubble Sort\n";
+					else
+						cout << "Bubble Sort Validated\n";
 
-			case INSERT:
-				popArray(list1);
-				insertPtr = insertSortIt;
-				startTime = clock();
-				list1 = (*insertPtr) (list1,0,ARRAY_SIZE);
-				endTime = clock();
-				elapsedTime = endTime - startTime;
-				insertAvg += elapsedTime;
-				tstAvg[userSorts[b]] = insertAvg / numTimes;
-				if (!sortValid(list1))
-					cout << "Invalid Insert Sort";
-				else
+					break;
+
+				case INSERT:
+					popArray(list1);
+					insertPtr = insertSortIt;
+					startTime = clock();
+					list1 = (*insertPtr) (list1, 0, ARRAY_SIZE);
+					endTime = clock();
+					elapsedTime = endTime - startTime;
+					insertAvg += elapsedTime;
+					tstAvg[userSorts[b]] = insertAvg / numTimes;
 					cout << "Insert Sort Time " << elapsedTime << endl;
-				
-				break;
+					if (!sortValid(list1))
+						cout << "Invalid Insert Sort\n";
+					else
+						cout << "Insert Sort Validated\n";
 
-			case QUICK:
-				popArray(list1);
-				quickPtr = quickSort;
-				startTime = clock();
-				list1 = (*quickPtr) (list1, 0, ARRAY_SIZE);
-				endTime = clock();
-				elapsedTime = endTime - startTime;
-				quickAvg += elapsedTime;
-				tstAvg[userSorts[b]] = quickAvg / numTimes;
-				
-				if (!sortValid(list1))
-					cout << "Invalid Quick Sort";
-				else
+					break;
+
+				case QUICK:
+					popArray(list1);
+					quickPtr = quickSort;
+					startTime = clock();
+					list1 = (*quickPtr) (list1, 0, ARRAY_SIZE);
+					endTime = clock();
+					elapsedTime = endTime - startTime;
+					quickAvg += elapsedTime;
+					tstAvg[userSorts[b]] = quickAvg / numTimes;
 					cout << "Quick Sort Time " << elapsedTime << endl;
-				
-				break;
+					if (!sortValid(list1))
+						cout << "Invalid Quick Sort\n";
+					else
+						cout << "Quick Sort Validated\n";
 
-			case MERGE:
-				popArray(list1);
-				mergePtr = mergeSortIt;
-				startTime = clock();
-			    (*mergePtr) (list1, 0, ARRAY_SIZE);
-				endTime = clock();
-				elapsedTime = endTime - startTime;
-				mergeAvg += elapsedTime;
-				tstAvg[userSorts[b]] = mergeAvg / numTimes;
 
-				if (!sortValid(list1))
-					cout << "Invalid Merge Sort";
-				else
+					break;
+
+				case MERGE:
+					popArray(list1);
+					mergePtr = mergeSortIt;
+					startTime = clock();
+					(*mergePtr) (list1, 0, ARRAY_SIZE);
+					endTime = clock();
+					elapsedTime = endTime - startTime;
+					mergeAvg += elapsedTime;
+					tstAvg[userSorts[b]] = mergeAvg / numTimes;
 					cout << "Merge Sort Time " << elapsedTime << endl;
-
-				break;
-			}// End switch
-			
-		}// End a Loop
+					if (!sortValid(list1))
+						cout << "Invalid Merge Sort\n";
+					else
+						cout << "Merge Sort Validated\n";
+					break;
+				
+				default:
+					cout << "Invalid Choice\n";
+				}// End switch
+			}// End a Loop
+		}
 	}
 }
-
-
 
 void showArray(int rdmLst[])
 {
@@ -134,7 +137,8 @@ void showArray(int rdmLst[])
 
 void merge(int rdmLst[], int low, int mid, int high)
 {
-	int h, i, j, b[ARRAY_SIZE+1], k;
+	int h, i, j, k = 0;
+	int tmpArray[ARRAY_SIZE + 1];
 	h = low;
 	i = low;
 	j = mid + 1;
@@ -143,12 +147,12 @@ void merge(int rdmLst[], int low, int mid, int high)
 	{
 		if (rdmLst[h] <= rdmLst[j])
 		{
-			b[i] = rdmLst[h];
+			tmpArray[i] = rdmLst[h];
 			h++;
 		}
 		else
 		{
-			b[i] = rdmLst[j];
+			tmpArray[i] = rdmLst[j];
 			j++;
 		}
 		i++;
@@ -157,7 +161,7 @@ void merge(int rdmLst[], int low, int mid, int high)
 	{
 		for (k = j; k <= high; k++)
 		{
-			b[i] = rdmLst[k];
+			tmpArray[i] = rdmLst[k];
 			i++;
 		}
 	}
@@ -165,14 +169,13 @@ void merge(int rdmLst[], int low, int mid, int high)
 	{
 		for (k = h; k <= mid; k++)
 		{
-			b[i] = rdmLst[k];
+			tmpArray[i] = rdmLst[k];
 			i++;
 		}
 	}
 	for (k = low; k <= high; k++) 
-		rdmLst[k] = b[k];
+		rdmLst[k] = tmpArray[k];
 }
-
 
 void mergeSortIt(int rdmLst[],int low, int high)
 {
@@ -205,17 +208,19 @@ void showResults(sortType theTests[], double *tstAvgs)
 {
 	string temp;
 
-	cout << "SORTING RESULTS"
+	
+	cout << "\nSORTING RESULTS"
 		<< "\n=================\n";
 	
 	for (int z = 0; z <= NUM_CHOICES - 1; z++)
 	{
 		if (tstAvgs[z])
 		{
-			cout << sortTypeStr[z] << " Sort " << tstAvgs[z] << " clock ticks on average \n";
+			cout << SORT_TYPE_STR[z] << " Sort " << tstAvgs[z] << " clock ticks on average \n";
 
 		}
 	}
+	cout << endl;
 }
 
 int * insertSortIt(int rdmLst[], int first, int last)
@@ -239,3 +244,42 @@ int * insertSortIt(int rdmLst[], int first, int last)
 	return rdmLst;
 }
 
+string getValidInput()
+{
+	char in1, in2;
+	string retStr;
+	bool isValid = false, firstValid = false , secValid = false;
+	
+	do
+	{
+		cout << "\n\tEnter two letter choices (or EE to exit): ";
+		cin >> in1 >> in2;
+		in1 = toupper(in1);
+		in2 = toupper(in2);
+
+		for (int a = 0; a <= NUM_CHOICES - 1; a++)
+		{
+			if (in1 == LTR_CHOICES[a])
+				firstValid = true;
+		}
+		for (int a = 0; a <= NUM_CHOICES - 1; a++)
+		{
+			if (in2 == LTR_CHOICES[a])
+				secValid = true;
+		}
+
+
+		if (firstValid && secValid)
+		{
+			isValid = true;
+			retStr = in1;
+			retStr += in2;
+
+		}
+		else
+			cout << "Invalid Choice\n";
+			
+	} while (!isValid);
+	
+	return retStr;
+}

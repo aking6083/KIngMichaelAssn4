@@ -10,8 +10,10 @@
 using namespace std;
 
 enum sortType { BUBBLE, INSERT, MERGE, QUICK, EXIT, NONE };
-const int NUM_CHOICES = 4;
-const string sortTypeStr[NUM_CHOICES] = { "Bubble", "Insert", "Merge", "Quick" };
+const int NUM_CHOICES = 5;
+const char LTR_CHOICES [5] = { 'B', 'I', 'M', 'Q', 'E' };
+const string SORT_TYPE_STR[NUM_CHOICES] = { "Bubble", "Insert", "Merge", "Quick" };
+
 const char BBL_SRT = 'B';
 const char MRG_SRT = 'M';
 const char QCK_SRT = 'Q';

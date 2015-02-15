@@ -2,6 +2,7 @@
 
 #include "KingMichael-Assn4-common.h"
 #include "Michael-Assn4-functions.h"
+#include "King-Assn4-functions.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -72,27 +73,19 @@ sortType * getUserSort(int &numTimes)
 		secChoice,
 		choice;
 	
-	cout << "\n\tEnter two letter choices (or EE to exit): ";
-	
-	if (numTimes > 0) //To clear the cin buffer
-	{
-		cin.clear();
-		cin.ignore(1000, '\n');
-	}
-		
-	getline(cin, userInput);
+	userInput = getValidInput();
 	
 	selCnt = userInput.length();
-	
+		
 	//Will put isValid loop to control error checking from external function of isValid()
-	if (selCnt > 1)
-	{
+	//if (selCnt > 1)
+	//{
 		firstChoice = toupper(userInput[0]);
 		secChoice = toupper(userInput[1]);
-	}
+	//}
 
-	else if (selCnt == 1)
-		firstChoice = toupper(userInput[0]);
+	//else if (selCnt == 1)
+		//firstChoice = toupper(userInput[0]);
 		
 	
 	choice = firstChoice; //For code reading logic
@@ -120,6 +113,12 @@ sortType * getUserSort(int &numTimes)
 		case EXIT_SRT:
 			usrSorts[a] = EXIT;
 			break;
+		
+		default:
+			cout << "Invalid Choice";
+			usrSorts[a] = EXIT;
+			break;
+
 		}
 		if (a < selCnt)
 			choice = secChoice;
@@ -133,7 +132,7 @@ return usrSorts;
 }
 
 //*****************************************************************************
-// FUNCTION: bubbleSort
+// FUNCTION: bubbleSortIt
 // DESCRIPTION: function performs a selection sort algorithm
 // INPUT: static array
 //      Parameters: staticArray[] - static random array
@@ -144,37 +143,6 @@ return usrSorts;
 // CALLS TO: N/A
 // IMPLEMENTED BY: Shawn Michael
 //*****************************************************************************
-
-void bubbleSort(int numTimes, int list[], int first, int last, double &srtAvg)
-{
-	static int timeSum = 0;
-	int temp,
-		iteration,
-		index,
-		startTime,
-		endTime,
-		elapsedTime;
-	int *aPtr;
-	aPtr = list;
-
-	startTime = clock();
-	for (iteration = 1; iteration <= last; iteration++){
-		for (index = 0; index <= last - iteration; index++) {
-			if (list[index + 1] < list[index]){
-				temp = list[index];
-				list[index] = list[index + 1];
-				list[index + 1] = temp;
-			}  // end if
-		} //end for
-	} //end for
-	endTime = clock();
-	elapsedTime = endTime - startTime;
-	timeSum += elapsedTime;
-	srtAvg = timeSum / numTimes;
-
-	
-}
-
 
 int * bubbleSortIt (int rdmLst[])
 {
