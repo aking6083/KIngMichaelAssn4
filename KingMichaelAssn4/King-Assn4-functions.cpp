@@ -132,25 +132,23 @@ void showArray(int rdmLst[])
 
 }
 
-void merge(int *rdmLst, int low, int mid, int high)
+void merge(int rdmLst[], int low, int mid, int high)
 {
-	int h, i, j, k = 0;
+	int h, i, j, b[ARRAY_SIZE+1], k;
 	h = low;
 	i = low;
 	j = mid + 1;
-
-	int *tmpArray = initArray();
 
 	while ((h <= mid) && (j <= high))
 	{
 		if (rdmLst[h] <= rdmLst[j])
 		{
-			tmpArray[i] = rdmLst[h];
+			b[i] = rdmLst[h];
 			h++;
 		}
 		else
 		{
-			tmpArray[i] = rdmLst[j];
+			b[i] = rdmLst[j];
 			j++;
 		}
 		i++;
@@ -159,7 +157,7 @@ void merge(int *rdmLst, int low, int mid, int high)
 	{
 		for (k = j; k <= high; k++)
 		{
-			tmpArray[i] = rdmLst[k];
+			b[i] = rdmLst[k];
 			i++;
 		}
 	}
@@ -167,26 +165,23 @@ void merge(int *rdmLst, int low, int mid, int high)
 	{
 		for (k = h; k <= mid; k++)
 		{
-			tmpArray[i] = rdmLst[k];
+			b[i] = rdmLst[k];
 			i++;
 		}
 	}
-	
 	for (k = low; k <= high; k++) 
-		rdmLst[k] = tmpArray[k];
-
-	
+		rdmLst[k] = b[k];
 }
 
 
-void mergeSortIt(int rdmLst[], int low, int high)
+void mergeSortIt(int rdmLst[],int low, int high)
 {
 	int mid;
 	if (low < high)
 	{
 		mid = low + (high - low) / 2; //This avoids overflow when low, high are too large
-		mergeSortIt(rdmLst, low, mid);
-		mergeSortIt(rdmLst, mid + 1, high);
+		mergeSortIt(rdmLst,low, mid);
+		mergeSortIt(rdmLst,mid + 1, high);
 		merge(rdmLst, low, mid, high);
 	}
 }
@@ -243,3 +238,4 @@ int * insertSortIt(int rdmLst[], int first, int last)
 	}
 	return rdmLst;
 }
+
