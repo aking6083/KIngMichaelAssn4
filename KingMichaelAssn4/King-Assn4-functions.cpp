@@ -175,10 +175,12 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
-//  INPUT:
-//  Parameters:
+//  FUNCTION:merge 
+//  DESCRIP:merges two lists. for use in mergeSortIt complex algorithm.
+//  INPUT: 
+//  Parameters: int low ~ low index;
+//			    int mid ~ middle index;
+//				int high ~ high index;
 //
 //  OUTPUT:
 //  Parameters:
@@ -190,10 +192,10 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 void merge(int rdmLst[], int low, int mid, int high)
 {
 	int h, i, j, k = 0;
-	static int tmpArray[ARRAY_SIZE];
-	h = low;
-	i = low;
-	j = mid + 1;
+	static int tmpArray[ARRAY_SIZE]; //Declare the temp array to store values
+	h = low; //left items
+	i = low; //Temp Position
+	j = mid + 1; //Right items
 
 	while ((h <= mid) && (j <= high))
 	{
@@ -211,7 +213,7 @@ void merge(int rdmLst[], int low, int mid, int high)
 	}
 	if (h>mid)
 	{
-		for (k = j; k <= high; k++)
+		for (k = j; k <= high; k++) //Left side??
 		{
 			tmpArray[i] = rdmLst[k];
 			i++;
@@ -219,7 +221,7 @@ void merge(int rdmLst[], int low, int mid, int high)
 	}
 	else
 	{
-		for (k = h; k <= mid; k++)
+		for (k = h; k <= mid; k++) //Right Side
 		{
 			tmpArray[i] = rdmLst[k];
 			i++;
@@ -230,38 +232,41 @@ void merge(int rdmLst[], int low, int mid, int high)
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
+//  FUNCTION:mergeSortIt
+//  DESCRIP: Recursive function to merge sort list
 //  INPUT:
-//  Parameters:
-//
+//  Parameters: int low ~ low Index to start sort
+//              int high ~ high Index to start sort
 //  OUTPUT:
-//  Parameters:
+//  Parameters: int rdmLst[] ~ the sorted list
 //  Return Val:
-//  CALLS TO:
+//  CALLS TO:  merge(),mergeSortIt()
 //  IMPLEMENTED BY:  Adam King
 ******************************************************************************/
 void mergeSortIt(int rdmLst[], int low, int high)
 {
-	int mid;
+	int mid = 0;
+	
 	if (low < high)
 	{
-		mid = low + (high - low) / 2; //This avoids overflow when low, high are too large
-		mergeSortIt(rdmLst,low, mid);
-		mergeSortIt(rdmLst,mid + 1, high);
-		merge(rdmLst, low, mid, high);
+		//Get middle index
+		mid = low + (high - low) / 2; //This may avoid overflow if numbers are
+									  // too large
+		mergeSortIt(rdmLst,low, mid); //Sort bottom or left
+		mergeSortIt(rdmLst,mid + 1, high); //Sort top or right
+		merge(rdmLst, low, mid, high); //Merge them
 	}
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
-//  INPUT:
-//  Parameters:
+//  FUNCTION:sortValid
+//  DESCRIP:Runs through sorted list ensuring list is sorted in ascending order
+//  INPUT: 
+//  Parameters: srtList[]
 //
 //  OUTPUT:
 //  Parameters:
-//  Return Val:
+//  Return Val: validSort ~ true if list is sorted correctly
 //  CALLS TO:
 //  IMPLEMENTED BY:  Adam King
 ******************************************************************************/
@@ -275,14 +280,13 @@ bool  sortValid(int srtList[])
 			cout << "Invalid Sort! at " << a << endl;
 			validSort = false;
 		}
-			
 	}
 	return validSort;
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
+//  FUNCTION: showResults
+//  DESCRIP:shows the results stored in tstAvgs
 //  INPUT:
 //  Parameters:
 //
@@ -295,7 +299,6 @@ bool  sortValid(int srtList[])
 void showResults(sortType theTests[], double *tstAvgs)
 {
 	string temp;
-
 	
 	cout << "\nSORTING RESULTS"
 		<< "\n=================\n";
