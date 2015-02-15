@@ -11,13 +11,15 @@ int main(int argc, char* argv[])
 	int numTimes = 0;
 	sortType *usrSorts;
 	double *srtAvgs = 0;
+	srtAvgs = new double[NUM_CHOICES];
 			
 	do
 	{
 		showMenu();
 		usrSorts = getUserSort(numTimes);
 		processChoices(usrSorts, numTimes, usrSorts, srtAvgs);
-
+		showResults(usrSorts, srtAvgs);
+		
 
 	} while (*usrSorts != EXIT);
 	

@@ -5,10 +5,13 @@
 #include <cctype>	     //for cctype predefined functions
 #include <ctime>			//for time seed in srand function
 #include <cstdlib>			//for c standard library predefined functions
+#include <string>
 
 using namespace std;
 
 enum sortType { BUBBLE, INSERT, MERGE, QUICK, EXIT, NONE };
+const int NUM_CHOICES = 4;
+const string sortTypeStr[NUM_CHOICES] = { "Bubble", "Insert", "Merge", "Quick" };
 const char BBL_SRT = 'B';
 const char MRG_SRT = 'M';
 const char QCK_SRT = 'Q';
