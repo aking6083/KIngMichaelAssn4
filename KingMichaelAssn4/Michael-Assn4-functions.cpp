@@ -256,7 +256,7 @@ int qPartition(int list[], int first, int last)
 // CALLS TO: N/A
 // IMPLEMENTED BY: Shawn Michael
 //*****************************************************************************
-void quickSort(int numTimes, int list[], int first, int last, double &srtAvg)
+int * quickSort(int rdmLst[], int first, int last)
 {
 	static int timeSum = 0;
 	int pivotLoc,
@@ -264,16 +264,14 @@ void quickSort(int numTimes, int list[], int first, int last, double &srtAvg)
 		endTime,
 		elapsedTime;
 
-	startTime = clock();    ///////////////////////////////this might screw with the calculation as it will start a new clock every time this recursive function is called.
+	
 	if (first < last){
-		pivotLoc = qPartition(list, first, last);
-		quickSort(numTimes, list, first, pivotLoc - 1, srtAvg);
-		quickSort(numTimes, list, pivotLoc + 1, last, srtAvg);
+		pivotLoc = qPartition(rdmLst, first, last);
+		quickSort(rdmLst, first, pivotLoc - 1);
+		quickSort(rdmLst, pivotLoc + 1, last);
 	}
-	endTime = clock();
-	elapsedTime = endTime - startTime;
-	timeSum += elapsedTime;
-	srtAvg = timeSum / numTimes;
+	
+	return rdmLst;
 }
 
 
@@ -290,7 +288,7 @@ void quickSort(int numTimes, int list[], int first, int last, double &srtAvg)
 // CALLS TO: Random(),
 // IMPLEMENTED BY: Shawn Michael
 //**********************************************************************
-void popArrays(int theList1[], int theList2[])
+void popArray(int theList[])
 {
 	int counter = 0;	    //counter to control input into static array
 	int rNum;				//int variable to hold random number
@@ -303,8 +301,7 @@ void popArrays(int theList1[], int theList2[])
 
 		//function creates random number and duplicate search
 		rNum = (rand() % MAX_ARRAY_NUM) + 1;
-		theList1[counter] = rNum;
-		theList2[counter] = rNum;
+		theList[counter] = rNum;
 		counter++;
 	}//end while
 }

@@ -30,19 +30,20 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 
 	int * (*bubblePtr) (int rdmLst[]);
 	int * (*insertPtr) (int rmdLst[], int first, int last);
-
-	int *list1,
-	    *list2;
+	int * (*quickPtr)(int rdmLst[], int first, int last);
+	
+	int *list1;
+	    //*list2;
 	
 	//No need to build both lists into one function, just call the same function twice to init the list.
 	list1 = initArray();
-	list2 = initArray();
+	//list2 = initArray();
 		
 	for (a = 0; a <= numTimes - 1; a++)
 	{
 		runningAvg = 0;
 		//Populate both lists with the same numbers.
-		popArrays(list1, list2);
+	;// Gonna have to change this becuase list1 and list2 dont make sense 
 		
 		elapsedTime = 0;
 		if (userSorts[a] != EXIT)
@@ -53,6 +54,7 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 			switch (userSorts[b])
 			{
 			case BUBBLE:
+				popArray(list1);
 				bubblePtr = bubbleSortIt;
 				startTime = clock();
 				list1 = (*bubblePtr) (list1);
@@ -69,14 +71,15 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 				break;
 
 			case INSERT:
+				popArray(list1);
 				insertPtr = insertSortIt;
 				startTime = clock();
-				list2 = (*insertPtr) (list2,0,ARRAY_SIZE);
+				list1 = (*insertPtr) (list1,0,ARRAY_SIZE);
 				endTime = clock();
 				elapsedTime = endTime - startTime;
 				insertAvg += elapsedTime;
 				tstAvg[userSorts[b]] = insertAvg / numTimes;
-				if (!sortValid(list2))
+				if (!sortValid(list1))
 					cout << "Invalid Insert Sort";
 				else
 					cout << "Insert Sort Time " << elapsedTime << endl;
@@ -85,7 +88,19 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[], doub
 				break;
 
 			case QUICK:
-				cout << "Quick Search\n";
+				popArray(list1);
+				quickPtr = quickSort;
+				startTime = clock();
+				list1 = (*quickPtr) (list1, 0, ARRAY_SIZE);
+				endTime = clock();
+				elapsedTime = endTime - startTime;
+				quickAvg += elapsedTime;
+				tstAvg[userSorts[b]] = quickAvg / numTimes;
+				if (!sortValid(list1))
+					cout << "Invalid Quick Sort";
+				else
+					cout << "Quick Sort Time " << elapsedTime << endl;
+				tstAvg[a] = runningAvg / numTimes;
 				//Insert Quick Sort here
 				break;
 
