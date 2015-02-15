@@ -226,11 +226,8 @@ int qPartition(int list[], int first, int last)
 int * quickSort(int rdmLst[], int first, int last)
 {
 	static int timeSum = 0;
-	int pivotLoc,
-		startTime,
-		endTime,
-		elapsedTime;
-
+	int pivotLoc;
+	
 	
 	if (first < last){
 		pivotLoc = qPartition(rdmLst, first, last);

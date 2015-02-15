@@ -6,9 +6,6 @@
 // DESIGNER: Shawn Michael
 //*****************************************************************************
 
-//prototypes
-//#include "KingMichael-Assn4-common.h"
-
 void showMenu();
 sortType * getUserSort(int &numTimes);
 int getTestRuns();
