@@ -28,7 +28,7 @@ const char INSRT_SRT = 'I';
 const char EXIT_SRT = 'E';
 
 const int SELECT_STRING = 10;
-const int ARRAY_SIZE = 100000;          //Max size of array
+const int ARRAY_SIZE = 10000;          //Max size of array
 const int MAX_ARRAY_NUM = 30000;        //Max value for static array input
 const int BOTTOM_IDX = 0;
 const string INVALID_NUM = "\n\tINVALID NUMBER!!!";

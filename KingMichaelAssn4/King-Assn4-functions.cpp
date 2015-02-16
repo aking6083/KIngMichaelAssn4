@@ -72,11 +72,15 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 		void(*mergePtr)(int rdmLst[], int start, int end);
 
 		int *list1; //make a list to sort
+		int *list2; //make a list to sort
+		int *theList;
 
 		/*The requirements doc says make two lists, but I think in-essence we are 
 		doing the same thing, we only need to init the memory space once, then 
 		rebuild the list for each test.  I may be missing something though.*/
-		list1 = initArray(); 
+		list1 = initArray();
+		list2 = initArray();
+		popArrays(list1, list2);
 
 		//Run Tests a number of times
 		for (a = 0; a <= numTimes - 1; a++) 
@@ -96,10 +100,14 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 				switch (userSorts[b])
 				{
 				case BUBBLE:
-					popArray(list1); //Make the list to sort
+					if (!sortValid(list1))
+						theList = list1;
+					else
+						theList = list2;
+					
 					bubblePtr = bubbleSortIt; //Function ptr
 					startTime = clock(); //On your Marks! GO!
-					list1 = (*bubblePtr) (list1); //sort the list via function ptr
+					theList = (*bubblePtr) (theList); //sort the list via function ptr
 					endTime = clock();//Stop timing
 					elapsedTime = endTime - startTime;
 					bubbleAvg += elapsedTime; 
@@ -107,18 +115,22 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 					tstAvg[userSorts[b]] = bubbleAvg / numTimes;
 					cout << "Bubble Sort Time " << elapsedTime << endl;
 					//Is sort Valid
-					if (!sortValid(list1))
+					if (!sortValid(theList))
 						cout << "Invalid Bubble Sort\n";
 					else
 						cout << "Bubble Sort Validated\n";
 					break;
 
 				case INSERT:
-					popArray(list1); //Make the list to sort
+					if (!sortValid(list1))
+						theList = list1;
+					else
+						theList = list2;
+					
 					insertPtr = insertSortIt; //Function ptr
 					startTime = clock(); //On your Marks! GO!
 					//sort the list via function ptr
-					list1 = (*insertPtr) (list1, 0, ARRAY_SIZE);
+					theList = (*insertPtr) (theList, 0, ARRAY_SIZE);
 					endTime = clock();//Stop timing
 					elapsedTime = endTime - startTime;
 					insertAvg += elapsedTime; 
@@ -126,18 +138,22 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 					tstAvg[userSorts[b]] = insertAvg / numTimes;
 					cout << "Insert Sort Time " << elapsedTime << endl;
 					//Is sort Valid
-					if (!sortValid(list1))
+					if (!sortValid(theList))
 						cout << "Invalid Insert Sort\n";
 					else
 						cout << "Insert Sort Validated\n";
 					break;
 
 				case QUICK:
-					popArray(list1); //Make the list to sort
+					if (!sortValid(list1))
+						theList = list1;
+					else
+						theList = list2;
+					
 					quickPtr = quickSort; //Function ptr
 					startTime = clock(); //On your Marks! GO!
 					//sort the list via function ptr
-					list1 = (*quickPtr) (list1, 0, ARRAY_SIZE);
+					theList = (*quickPtr) (theList, 0, ARRAY_SIZE);
 					endTime = clock();//Stop timing
 					elapsedTime = endTime - startTime;
 					quickAvg += elapsedTime;
@@ -145,17 +161,21 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 					tstAvg[userSorts[b]] = quickAvg / numTimes;
 					cout << "Quick Sort Time " << elapsedTime << endl;
 					//Is sort Valid
-					if (!sortValid(list1))
+					if (!sortValid(theList))
 						cout << "Invalid Quick Sort\n";
 					else
 						cout << "Quick Sort Validated\n";
 					break;
 
 				case MERGE:
-					popArray(list1); //Make the list to sort
+					if (!sortValid(list1))
+						theList = list1;
+					else
+						theList = list2;
+					
 					mergePtr = mergeSortIt; //Function ptr
 					startTime = clock(); //On your Marks! GO!
-					(*mergePtr) (list1, 0, ARRAY_SIZE);
+					(*mergePtr) (theList, 0, ARRAY_SIZE);
 					endTime = clock();//Stop timing
 					elapsedTime = endTime - startTime;
 					mergeAvg += elapsedTime;
@@ -163,7 +183,7 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 					tstAvg[userSorts[b]] = mergeAvg / numTimes;
 					cout << "Merge Sort Time " << elapsedTime << endl;
 					//Is sort Valid
-					if (!sortValid(list1))
+					if (!sortValid(theList))
 						cout << "Invalid Merge Sort\n";
 					else
 						cout << "Merge Sort Validated\n";
@@ -172,6 +192,7 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 			}// End b Loop
 		}// End a Loop
 	}
+	
 }
 
 /******************************************************************************
@@ -277,7 +298,6 @@ bool  sortValid(int srtList[])
 	{
 		if (srtList[a] > srtList[a + 1])
 		{
-			cout << "Invalid Sort! at " << a << endl;
 			validSort = false;
 		}
 	}
@@ -288,7 +308,8 @@ bool  sortValid(int srtList[])
 //  FUNCTION: showResults
 //  DESCRIP:shows the results stored in tstAvgs
 //  INPUT:
-//  Parameters:
+//  Parameters: sortType theTests[] ~ the tests that were run
+//              double * tstAvgs ~ array of stored results
 //
 //  OUTPUT:
 //  Parameters:
@@ -315,22 +336,23 @@ void showResults(sortType theTests[], double *tstAvgs)
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
+//  FUNCTION:insertSortIt
+//  DESCRIP: performs insert sort on passed list
 //  INPUT:
-//  Parameters:
-//
+//  Parameters:rdmLst[] ~ the random list
+//			   int first ~ index to start with
+//			   int last ~ index to end with
 //  OUTPUT:
 //  Parameters:
-//  Return Val:
+//  Return Val: int rdmLst[] ~ the sorted list
 //  CALLS TO:
 //  IMPLEMENTED BY:  Adam King
 ******************************************************************************/
 int * insertSortIt(int rdmLst[], int first, int last)
 {
-	int i,
-		j,
-		key;
+	int i = 0,
+		j = 0,
+		key = 0;
 
 	for (j = 1; j <= last; j++)
 	{
@@ -348,14 +370,14 @@ int * insertSortIt(int rdmLst[], int first, int last)
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
+//  FUNCTION:getValidInput
+//  DESCRIP:Get the validated menu choice from user
 //  INPUT:
-//  Parameters:
+//  Parameters: none
 //
 //  OUTPUT:
 //  Parameters:
-//  Return Val:
+//  Return Val: string retStr ~ the validated menu choices
 //  CALLS TO:
 //  IMPLEMENTED BY:  Adam King
 ******************************************************************************/
@@ -372,11 +394,13 @@ string getValidInput()
 		in1 = toupper(in1);
 		in2 = toupper(in2);
 
+		//Check first letter
 		for (int a = 0; a <= NUM_CHOICES - 1; a++)
 		{
 			if (in1 == LTR_CHOICES[a])
 				firstValid = true;
 		}
+		//Check second letter
 		for (int a = 0; a <= NUM_CHOICES - 1; a++)
 		{
 			if (in2 == LTR_CHOICES[a])

@@ -76,17 +76,9 @@ sortType * getUserSort(int &numTimes)
 	userInput = getValidInput();
 	
 	selCnt = userInput.length();
-		
-	//Will put isValid loop to control error checking from external function of isValid()
-	//if (selCnt > 1)
-	//{
-		firstChoice = toupper(userInput[0]);
-		secChoice = toupper(userInput[1]);
-	//}
-
-	//else if (selCnt == 1)
-		//firstChoice = toupper(userInput[0]);
-		
+	
+	firstChoice = toupper(userInput[0]);
+	secChoice = toupper(userInput[1]);
 	
 	choice = firstChoice; //For code reading logic
 	
@@ -252,7 +244,7 @@ int * quickSort(int rdmLst[], int first, int last)
 // CALLS TO: Random(),
 // IMPLEMENTED BY: Shawn Michael
 //**********************************************************************
-void popArray(int theList[])
+void popArrays(int theList1[], int theList2[])
 {
 	int counter = 0;	    //counter to control input into static array
 	int rNum;				//int variable to hold random number
@@ -265,7 +257,8 @@ void popArray(int theList[])
 
 		//function creates random number and duplicate search
 		rNum = (rand() % MAX_ARRAY_NUM) + 1;
-		theList[counter] = rNum;
+		theList1[counter] = rNum;
+		theList2[counter] = rNum;
 		counter++;
 	}//end while
 }
