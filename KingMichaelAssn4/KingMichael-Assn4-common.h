@@ -4,8 +4,6 @@
 // CLASS/TERM: CS 372, 15S8W1
 // DESIGNER: Shawn Michael & Adam King
 //*****************************************************************************
-
-#include "stdafx.h"
 #include <iomanip>
 #include <iostream>      //cin and cout
 #include <cstddef>       // used for assigning NULL
@@ -17,8 +15,11 @@
 using namespace std;
 
 enum sortType { BUBBLE, INSERT, MERGE, QUICK, EXIT, NONE };
+
+typedef sortType testType;
+
 const int NUM_CHOICES = 5;
-const char LTR_CHOICES [NUM_CHOICES] = { 'B', 'I', 'M', 'Q', 'E' };
+const char LTR_CHOICES[NUM_CHOICES] = { 'B', 'I', 'M', 'Q', 'E' };
 const string SORT_TYPE_STR[NUM_CHOICES] = { "Bubble", "Insert", "Merge", "Quick" };
 
 const char BBL_SRT = 'B';

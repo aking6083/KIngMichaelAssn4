@@ -252,7 +252,7 @@ int * quickSort(int rdmLst[], int first, int last)
 // CALLS TO: Random(),
 // IMPLEMENTED BY: Shawn Michael
 //**********************************************************************
-void popArray(int theList[])
+void popArray(int list1[], int list2[])
 {
 	int counter = 0;	    //counter to control input into static array
 	int rNum;				//int variable to hold random number
@@ -265,7 +265,8 @@ void popArray(int theList[])
 
 		//function creates random number and duplicate search
 		rNum = (rand() % MAX_ARRAY_NUM) + 1;
-		theList[counter] = rNum;
+		list1[counter] = rNum;
+		list2[counter] = rNum;
 		counter++;
 	}//end while
 }

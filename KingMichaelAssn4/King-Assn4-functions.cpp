@@ -5,14 +5,14 @@
 // DESIGNER: Adam King
 // FUNCTIONS:
 // ~Runs the tests and keeps up with the average run times
-// void processChoices(sortType* userSorts, int numTimes, testType theTests[], 
+// void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 //					   double *tstAvg);
 // void merge(int rdmLst[], int low, int mid, int high); ~merge part of mergesort
 // void mergeSortIt(int rdmLst[], int low, int high); ~Merge sort the list
 // int * insertSortIt(int rdmLst[], int first, int last); ~Insert Sort the list
 // bool  sortValid(int srtList[]); ~is the sort a valid one?
 // ~Show the average run times for each test
-// void showResults(sortType theTests[], double *tstAvgs); 
+// void showResults(sortType theTests[], double *tstAvgs);
 // string getValidInput(); ~ gets the valid input from user.
 //****************************************************************************/
 
@@ -26,18 +26,18 @@ typedef sortType testType;
 
 /******************************************************************************
 //  FUNCTION: processChoices
-//  DESCRIP:  Gets the sort type from user and runs the test x amount of times 
-//		      keeping up with the average sort times for each test. 
+//  DESCRIP:  Gets the sort type from user and runs the test x amount of times
+//		      keeping up with the average sort times for each test.
 //			  Maybe a little overcomplicated, but I coded with expansion in mind
 //            Would like to make it a little more cohesive.
-//  INPUT:		
+//  INPUT:
 //  Parameters: sortType* userSorts ~ array of user selected sorts
 //				int numTimes ~ number of times each test will run
-//				testType theTests[] ~ array with 2 elements 0-4 that holds the 
+//				testType theTests[] ~ array with 2 elements 0-4 that holds the
 //									 type tests that are to be run.
 //
 //  OUTPUT:
-//  Parameters: double *tstAvg ~pointer to array that holds each test average 
+//  Parameters: double *tstAvg ~pointer to array that holds each test average
 //									 I.E. tstAvg[0] would hold the average for
 //									 BUBBLE Sort.
 
@@ -46,8 +46,8 @@ typedef sortType testType;
 //			  initArray()
 //  IMPLEMENTED BY:  Adam King
 ******************************************************************************/
-void processChoices(sortType* userSorts, int numTimes, testType theTests[], 
-				   double *tstAvg)
+void processChoices(sortType* userSorts, int numTimes, testType theTests[],
+	double *tstAvg)
 {
 	if (*userSorts != EXIT) //If the user doesnt want to exit
 	{
@@ -58,11 +58,11 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 			elapsedTime = 0;
 
 		double runningAvg = 0, // For average calculation
-				bubbleAvg = 0, 
-				insertAvg = 0,
-				quickAvg = 0,
-				mergeAvg = 0,
-				srchRslts = 0;
+			bubbleAvg = 0,
+			insertAvg = 0,
+			quickAvg = 0,
+			mergeAvg = 0,
+			srchRslts = 0;
 
 		//Function pointers.
 
@@ -72,72 +72,88 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 		void(*mergePtr)(int rdmLst[], int start, int end);
 
 		int *list1; //make a list to sort
+		int *list2; //make a list to sort
+		int *theList;
 
-		/*The requirements doc says make two lists, but I think in-essence we are 
-		doing the same thing, we only need to init the memory space once, then 
+		/*The requirements doc says make two lists, but I think in-essence we are
+		doing the same thing, we only need to init the memory space once, then
 		rebuild the list for each test.  I may be missing something though.*/
-		list1 = initArray(); 
+		list1 = initArray();
+		list2 = initArray();
+		popArray(list1, list2);
 
 		//Run Tests a number of times
-		for (a = 0; a <= numTimes - 1; a++) 
+		for (a = 0; a <= numTimes - 1; a++)
 		{
 			runningAvg = 0;
 			elapsedTime = 0;
-			
+
 			if (userSorts[a] != EXIT)
 			{
 				cout << "\nStarting Sort " << a + 1 << endl;
 				cout << "======================" << endl;
 			}
-			
+
 			//Run through the userSort selection array
-			for (b = 0; b <= MAX_CHOICES - 1; b++) 
+			for (b = 0; b <= MAX_CHOICES - 1; b++)
 			{
 				switch (userSorts[b])
 				{
 				case BUBBLE:
-					popArray(list1); //Make the list to sort
+					if (!sortValid(list1))
+						theList = list1;
+					else
+						theList = list2;
+
 					bubblePtr = bubbleSortIt; //Function ptr
 					startTime = clock(); //On your Marks! GO!
-					list1 = (*bubblePtr) (list1); //sort the list via function ptr
+					theList = (*bubblePtr) (theList); //sort the list via function ptr
 					endTime = clock();//Stop timing
 					elapsedTime = endTime - startTime;
-					bubbleAvg += elapsedTime; 
+					bubbleAvg += elapsedTime;
 					//Store the running average
 					tstAvg[userSorts[b]] = bubbleAvg / numTimes;
 					cout << "Bubble Sort Time " << elapsedTime << endl;
 					//Is sort Valid
-					if (!sortValid(list1))
+					if (!sortValid(theList))
 						cout << "Invalid Bubble Sort\n";
 					else
 						cout << "Bubble Sort Validated\n";
 					break;
 
 				case INSERT:
-					popArray(list1); //Make the list to sort
+					if (!sortValid(list1))
+						theList = list1;
+					else
+						theList = list2;
+
 					insertPtr = insertSortIt; //Function ptr
 					startTime = clock(); //On your Marks! GO!
 					//sort the list via function ptr
-					list1 = (*insertPtr) (list1, 0, ARRAY_SIZE);
+					theList = (*insertPtr) (theList, 0, ARRAY_SIZE);
 					endTime = clock();//Stop timing
 					elapsedTime = endTime - startTime;
-					insertAvg += elapsedTime; 
+					insertAvg += elapsedTime;
 					//Store the running average
 					tstAvg[userSorts[b]] = insertAvg / numTimes;
 					cout << "Insert Sort Time " << elapsedTime << endl;
 					//Is sort Valid
-					if (!sortValid(list1))
+					if (!sortValid(theList))
 						cout << "Invalid Insert Sort\n";
 					else
 						cout << "Insert Sort Validated\n";
 					break;
 
 				case QUICK:
-					popArray(list1); //Make the list to sort
+					if (!sortValid(list1))
+						theList = list1;
+					else
+						theList = list2;
+
 					quickPtr = quickSort; //Function ptr
 					startTime = clock(); //On your Marks! GO!
 					//sort the list via function ptr
-					list1 = (*quickPtr) (list1, 0, ARRAY_SIZE);
+					theList = (*quickPtr) (theList, 0, ARRAY_SIZE);
 					endTime = clock();//Stop timing
 					elapsedTime = endTime - startTime;
 					quickAvg += elapsedTime;
@@ -145,17 +161,21 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 					tstAvg[userSorts[b]] = quickAvg / numTimes;
 					cout << "Quick Sort Time " << elapsedTime << endl;
 					//Is sort Valid
-					if (!sortValid(list1))
+					if (!sortValid(theList))
 						cout << "Invalid Quick Sort\n";
 					else
 						cout << "Quick Sort Validated\n";
 					break;
 
 				case MERGE:
-					popArray(list1); //Make the list to sort
+					if (!sortValid(list1))
+						theList = list1;
+					else
+						theList = list2;
+
 					mergePtr = mergeSortIt; //Function ptr
 					startTime = clock(); //On your Marks! GO!
-					(*mergePtr) (list1, 0, ARRAY_SIZE);
+					(*mergePtr) (theList, 0, ARRAY_SIZE);
 					endTime = clock();//Stop timing
 					elapsedTime = endTime - startTime;
 					mergeAvg += elapsedTime;
@@ -163,7 +183,7 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 					tstAvg[userSorts[b]] = mergeAvg / numTimes;
 					cout << "Merge Sort Time " << elapsedTime << endl;
 					//Is sort Valid
-					if (!sortValid(list1))
+					if (!sortValid(theList))
 						cout << "Invalid Merge Sort\n";
 					else
 						cout << "Merge Sort Validated\n";
@@ -172,13 +192,16 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 			}// End b Loop
 		}// End a Loop
 	}
+
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
+//  FUNCTION:merge
+//  DESCRIP:merges two lists. for use in mergeSortIt complex algorithm.
 //  INPUT:
-//  Parameters:
+//  Parameters: int low ~ low index;
+//			    int mid ~ middle index;
+//				int high ~ high index;
 //
 //  OUTPUT:
 //  Parameters:
@@ -190,10 +213,10 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 void merge(int rdmLst[], int low, int mid, int high)
 {
 	int h, i, j, k = 0;
-	static int tmpArray[ARRAY_SIZE];
-	h = low;
-	i = low;
-	j = mid + 1;
+	static int tmpArray[ARRAY_SIZE]; //Declare the temp array to store values
+	h = low; //left items
+	i = low; //Temp Position
+	j = mid + 1; //Right items
 
 	while ((h <= mid) && (j <= high))
 	{
@@ -211,7 +234,7 @@ void merge(int rdmLst[], int low, int mid, int high)
 	}
 	if (h>mid)
 	{
-		for (k = j; k <= high; k++)
+		for (k = j; k <= high; k++) //Left side??
 		{
 			tmpArray[i] = rdmLst[k];
 			i++;
@@ -219,49 +242,52 @@ void merge(int rdmLst[], int low, int mid, int high)
 	}
 	else
 	{
-		for (k = h; k <= mid; k++)
+		for (k = h; k <= mid; k++) //Right Side
 		{
 			tmpArray[i] = rdmLst[k];
 			i++;
 		}
 	}
-	for (k = low; k <= high; k++) 
+	for (k = low; k <= high; k++)
 		rdmLst[k] = tmpArray[k];
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
+//  FUNCTION:mergeSortIt
+//  DESCRIP: Recursive function to merge sort list
 //  INPUT:
-//  Parameters:
-//
+//  Parameters: int low ~ low Index to start sort
+//              int high ~ high Index to start sort
 //  OUTPUT:
-//  Parameters:
+//  Parameters: int rdmLst[] ~ the sorted list
 //  Return Val:
-//  CALLS TO:
+//  CALLS TO:  merge(),mergeSortIt()
 //  IMPLEMENTED BY:  Adam King
 ******************************************************************************/
 void mergeSortIt(int rdmLst[], int low, int high)
 {
-	int mid;
+	int mid = 0;
+
 	if (low < high)
 	{
-		mid = low + (high - low) / 2; //This avoids overflow when low, high are too large
-		mergeSortIt(rdmLst,low, mid);
-		mergeSortIt(rdmLst,mid + 1, high);
-		merge(rdmLst, low, mid, high);
+		//Get middle index
+		mid = low + (high - low) / 2; //This may avoid overflow if numbers are
+		// too large
+		mergeSortIt(rdmLst, low, mid); //Sort bottom or left
+		mergeSortIt(rdmLst, mid + 1, high); //Sort top or right
+		merge(rdmLst, low, mid, high); //Merge them
 	}
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
+//  FUNCTION:sortValid
+//  DESCRIP:Runs through sorted list ensuring list is sorted in ascending order
 //  INPUT:
-//  Parameters:
+//  Parameters: srtList[]
 //
 //  OUTPUT:
 //  Parameters:
-//  Return Val:
+//  Return Val: validSort ~ true if list is sorted correctly
 //  CALLS TO:
 //  IMPLEMENTED BY:  Adam King
 ******************************************************************************/
@@ -272,19 +298,18 @@ bool  sortValid(int srtList[])
 	{
 		if (srtList[a] > srtList[a + 1])
 		{
-			cout << "Invalid Sort! at " << a << endl;
 			validSort = false;
 		}
-			
 	}
 	return validSort;
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
+//  FUNCTION: showResults
+//  DESCRIP:shows the results stored in tstAvgs
 //  INPUT:
-//  Parameters:
+//  Parameters: sortType theTests[] ~ the tests that were run
+//              double * tstAvgs ~ array of stored results
 //
 //  OUTPUT:
 //  Parameters:
@@ -296,10 +321,9 @@ void showResults(sortType theTests[], double *tstAvgs)
 {
 	string temp;
 
-	
 	cout << "\nSORTING RESULTS"
 		<< "\n=================\n";
-	
+
 	for (int z = 0; z <= NUM_CHOICES - 1; z++)
 	{
 		if (tstAvgs[z])
@@ -312,22 +336,23 @@ void showResults(sortType theTests[], double *tstAvgs)
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
+//  FUNCTION:insertSortIt
+//  DESCRIP: performs insert sort on passed list
 //  INPUT:
-//  Parameters:
-//
+//  Parameters:rdmLst[] ~ the random list
+//			   int first ~ index to start with
+//			   int last ~ index to end with
 //  OUTPUT:
 //  Parameters:
-//  Return Val:
+//  Return Val: int rdmLst[] ~ the sorted list
 //  CALLS TO:
 //  IMPLEMENTED BY:  Adam King
 ******************************************************************************/
 int * insertSortIt(int rdmLst[], int first, int last)
 {
-	int i,
-		j,
-		key;
+	int i = 0,
+		j = 0,
+		key = 0;
 
 	for (j = 1; j <= last; j++)
 	{
@@ -345,14 +370,14 @@ int * insertSortIt(int rdmLst[], int first, int last)
 }
 
 /******************************************************************************
-//  FUNCTION:
-//  DESCRIP:
+//  FUNCTION:getValidInput
+//  DESCRIP:Get the validated menu choice from user
 //  INPUT:
-//  Parameters:
+//  Parameters: none
 //
 //  OUTPUT:
 //  Parameters:
-//  Return Val:
+//  Return Val: string retStr ~ the validated menu choices
 //  CALLS TO:
 //  IMPLEMENTED BY:  Adam King
 ******************************************************************************/
@@ -360,8 +385,8 @@ string getValidInput()
 {
 	char in1, in2;
 	string retStr;
-	bool isValid = false, firstValid = false , secValid = false;
-	
+	bool isValid = false, firstValid = false, secValid = false;
+
 	do
 	{
 		cout << "\n\tEnter two letter choices (or EE to exit): ";
@@ -369,11 +394,13 @@ string getValidInput()
 		in1 = toupper(in1);
 		in2 = toupper(in2);
 
+		//Check first letter
 		for (int a = 0; a <= NUM_CHOICES - 1; a++)
 		{
 			if (in1 == LTR_CHOICES[a])
 				firstValid = true;
 		}
+		//Check second letter
 		for (int a = 0; a <= NUM_CHOICES - 1; a++)
 		{
 			if (in2 == LTR_CHOICES[a])
@@ -390,8 +417,8 @@ string getValidInput()
 		}
 		else
 			cout << "Invalid Choice\n";
-			
+
 	} while (!isValid);
-	
+
 	return retStr;
 }
