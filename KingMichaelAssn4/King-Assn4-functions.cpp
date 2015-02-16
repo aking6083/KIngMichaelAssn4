@@ -73,11 +73,8 @@ void processChoices(sortType* userSorts, int numTimes, testType theTests[],
 
 		int *list1; //make a list to sort
 		int *list2; //make a list to sort
-		int *theList;
+		int *theList; //for decision making
 
-		/*The requirements doc says make two lists, but I think in-essence we are
-		doing the same thing, we only need to init the memory space once, then
-		rebuild the list for each test.  I may be missing something though.*/
 		list1 = initArray();
 		list2 = initArray();
 		popArray(list1, list2);

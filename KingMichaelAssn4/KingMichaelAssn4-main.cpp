@@ -5,8 +5,6 @@
 // DESIGNER: Shawn Michael & Adam King
 //*****************************************************************************
 
-
-//#include "stdafx.h"
 #include "KingMichael-Assn4-common.h"
 #include "Michael-Assn4-functions.h"
 #include "King-Assn4-functions.h"
